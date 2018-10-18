@@ -45,7 +45,7 @@ export class GameList extends React.Component <any, IGameListState>{
     }
 
     public joinGame(id: string) {
-        this.props.history.push(id);
+        this.props.history.push("/join/" + id);
     }
 
     public render() {

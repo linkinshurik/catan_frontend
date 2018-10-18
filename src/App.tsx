@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Router } from 'react-router'
 import './App.css';
 import GameList from './components/GameList';
 import Login from './components/Login';
 import { IUser } from './types';
 
 import createBrowserHistory from 'history/createBrowserHistory'
+import { Route, Router } from 'react-router'
+import JoinGame from './components/JoinGame';
 
 class App extends React.Component <any, any>{
   constructor(props: any) {
@@ -36,12 +37,14 @@ class App extends React.Component <any, any>{
   }
 
   public render() {
+    const LoginForm = () => <Login setUserToken = {this.setUserToken}/>
     return (
       <Router history={this.state.history}>
         <div className="App">
-        
-          <Login setUserToken = {this.setUserToken}/>
-          <GameList />
+          <Route exact path={"/"} component={LoginForm} />
+          <Route path={"/login"} component={LoginForm} />
+          <Route path={"/join/:id"} component={JoinGame} />
+          <Route path={"/games"} component={GameList} />
         </div>
       </Router>
 
