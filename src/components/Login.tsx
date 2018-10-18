@@ -1,20 +1,19 @@
 import axios from 'axios';
 import * as React from 'react';
+import { IUser } from 'src/types';
 
 export interface ILoginProps {
-    title: string;
+    setUserToken: (user: IUser) => void;
 };
 export interface ILoginState {
     name: string;
-    token: string | null;
 };
 
 export default class Login extends React.Component<ILoginProps, ILoginState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            name: '',
-            token: localStorage.getItem('token'),
+            name: ''
         }
 
         this.onNameChange = this.onNameChange.bind(this);
@@ -26,7 +25,9 @@ export default class Login extends React.Component<ILoginProps, ILoginState> {
     }
 
     public onSaveName() {
-        axios.get("https://localhost:44326/api/games")
+        const { name } = this.state;
+        axios.post("/api/users/register", {Name: name})
+            .then((res) => this.props.setUserToken(res.data))
     }
 
     public render() {
