@@ -1,19 +1,23 @@
 import * as React from 'react';
+import { Router } from 'react-router'
 import './App.css';
 import GameList from './components/GameList';
 import Login from './components/Login';
 import { IUser } from './types';
 
-class App extends React.Component {
+import createBrowserHistory from 'history/createBrowserHistory'
+
+class App extends React.Component <any, any>{
   constructor(props: any) {
     super(props) 
     this.state = {
+      history: createBrowserHistory(),
       user: {
         name: localStorage.getItem('name'),
         token: localStorage.getItem('token')
-      }
+      },
     }
-
+    
     this.setUserToken = this.setUserToken.bind(this);
   }
 
@@ -33,11 +37,14 @@ class App extends React.Component {
 
   public render() {
     return (
-      <div className="App">
-       
-        <Login setUserToken = {this.setUserToken}/>
-        <GameList />
-      </div>
+      <Router history={this.state.history}>
+        <div className="App">
+        
+          <Login setUserToken = {this.setUserToken}/>
+          <GameList />
+        </div>
+      </Router>
+
     );
   }
 }
