@@ -41,7 +41,7 @@ class App extends React.Component <any, any>{
     return (
       <Router history={this.state.history}>
         <div className="App">
-          <Route exact path={"/"} component={LoginForm} />
+          <Route exact = { true } path={"/"} component={LoginForm} />
           <Route path={"/login"} component={LoginForm} />
           <Route path={"/join/:id"} component={JoinGame} />
           <Route path={"/games"} component={GameList} />
