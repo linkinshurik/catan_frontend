@@ -1,15 +1,18 @@
 import axios from 'axios';
 import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { IUser } from 'src/types';
 
-export interface ILoginProps {
+export interface ILoginProps extends RouteComponentProps {
+    token: string;
+    
     setUserToken: (user: IUser) => void;
 };
 export interface ILoginState {
     name: string;
 };
 
-export default class Login extends React.Component<ILoginProps, ILoginState> {
+export class Login extends React.Component<ILoginProps, ILoginState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -20,6 +23,12 @@ export default class Login extends React.Component<ILoginProps, ILoginState> {
         this.onSaveName = this.onSaveName.bind(this);
     }
 
+    public componentDidMount() {
+        if (this.props.token) {
+            this.props.history.push('/games')
+        }
+    }
+
     public onNameChange(e: any) {
         this.setState({name: e.target.value})
     }
@@ -27,7 +36,10 @@ export default class Login extends React.Component<ILoginProps, ILoginState> {
     public onSaveName() {
         const { name } = this.state;
         axios.post("/api/users/register", {Name: name})
-            .then((res) => this.props.setUserToken(res.data))
+            .then((res) => { 
+                this.props.setUserToken(res.data);
+                this.props.history.push('/games');
+            })
     }
 
     public render() {
@@ -39,3 +51,5 @@ export default class Login extends React.Component<ILoginProps, ILoginState> {
         </div>
     }
 }
+
+export default withRouter(Login);

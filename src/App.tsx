@@ -42,7 +42,7 @@ class App extends React.Component <any, IAppState>{
     localStorage.setItem('token', user.token);
     localStorage.setItem('name', user.name);
 
-    this.setState({user})
+    this.setState({user});
   }
 
   public logOut() {
@@ -54,8 +54,9 @@ class App extends React.Component <any, IAppState>{
 
   public render() {
     const { user } = this.state;
-    const LoginForm = () => <Login setUserToken = {this.setUserToken}/>
+    const LoginForm = () => <Login setUserToken = {this.setUserToken} token = {user && user.token}/>
     const HomePageForm = () => <HomePage token = {user && user.token}/>
+    
     return (
       <Router history={this.state.history}>
         <div className="App">
