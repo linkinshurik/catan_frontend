@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as React from 'react';
 import { withRouter } from 'react-router';
+import App from 'src/App';
 import { IGame } from 'src/types';
 import { GameItem } from './GameItem';
 
@@ -37,7 +38,8 @@ export class GameList extends React.Component <any, IGameListState>{
     }
 
     public createGame() {
-        axios.post('/api/games', { Token: this.props.Token }).then(res => {
+        const user = App.getUserFromLS();
+        axios.post('/api/games', user).then(res => {
             this.setState({
                 gameId: res.data
             })
