@@ -4,6 +4,7 @@ import { Route, Router } from 'react-router'
 import './App.css';
 import GameList from './components/GameList';
 import HomePage from './components/HomePage';
+import Island from './components/Island';
 import JoinGame from './components/JoinGame';
 import Login from './components/Login';
 import { IUser } from './types';
@@ -28,8 +29,6 @@ class App extends React.Component <any, IAppState>{
   constructor(props: any) {
     super(props);
 
-
-    
     this.state = {
       history: createBrowserHistory(),
       user: App.getUserFromLS()
@@ -64,6 +63,7 @@ class App extends React.Component <any, IAppState>{
           <Route path={"/login"} component={LoginForm} />
           <Route path={"/join/:id"} component={JoinGame} />
           <Route path={"/games"} component={GameList} />
+          <Route path={"/land/:id"} component={Island} />
         </div>
       </Router>
 

@@ -1,15 +1,18 @@
 import axios from 'axios';
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import App from 'src/App';
 
 
-export default class JoinGame extends React.Component<any, any> {
+export class JoinGame extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
         this.state = {
             game: null
         }
+
+        this.onStartGame = this.onStartGame.bind(this);
     }
 
     public componentDidMount() {
@@ -23,6 +26,10 @@ export default class JoinGame extends React.Component<any, any> {
         }))
     };
 
+    public onStartGame() {
+        this.props.history.push('/land/' + this.state.game.landId);
+    }
+
     public render() {
         const { game } = this.state;
         if ( game === null ) {
@@ -35,6 +42,9 @@ export default class JoinGame extends React.Component<any, any> {
             <div>{game.user2}</div>
             <div>{game.user3}</div>
             <div>{game.user4}</div>
+            <button onClick = { this.onStartGame }>Start game</button>
         </div>
     }
 }
+
+export default withRouter(JoinGame);
