@@ -12,10 +12,16 @@ export class HomePage extends React.Component<IHomePageProps> {
             this.props.history.push('/login')
         }
     }
+
+    public goToGameList() {
+        this.props.history.push('/games')
+    }
     
     public render() {
 
-        return <div>Home Page!</div>
+        return <div>Home Page!
+            <button onClick = { this.goToGameList }>Go to Game List</button>
+        </div>
     }
 } 
 
