@@ -1,7 +1,7 @@
 import createBrowserHistory from 'history/createBrowserHistory'
 import * as React from 'react';
 import { Route, Router } from 'react-router'
-import './App.css';
+import './App.scss';
 import GameList from './components/GameList';
 import HomePage from './components/HomePage';
 import Island from './components/Island';
@@ -20,12 +20,12 @@ class App extends React.Component <any, IAppState>{
     const token = localStorage.getItem('token');
 
     if (name && token) {
-      return { name, token }      
+      return { name, token }
     }
-    
+
     return null;
   }
-  
+
   constructor(props: any) {
     super(props);
 
@@ -33,7 +33,7 @@ class App extends React.Component <any, IAppState>{
       history: createBrowserHistory(),
       user: App.getUserFromLS()
     }
-    
+
     this.setUserToken = this.setUserToken.bind(this);
   }
 
@@ -55,7 +55,7 @@ class App extends React.Component <any, IAppState>{
     const { user } = this.state;
     const LoginForm = () => <Login setUserToken = {this.setUserToken} token = {user && user.token}/>
     const HomePageForm = () => <HomePage token = {user && user.token}/>
-    
+
     return (
       <Router history={this.state.history}>
         <div className="App">
