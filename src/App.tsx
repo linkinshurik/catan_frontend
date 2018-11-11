@@ -1,7 +1,7 @@
 import createBrowserHistory from 'history/createBrowserHistory'
 import * as React from 'react';
 import { Route, Router } from 'react-router'
-import './App.scss';
+
 import GameList from './components/GameList';
 import HomePage from './components/HomePage';
 import Island from './components/Island';

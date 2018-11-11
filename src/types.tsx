@@ -17,4 +17,19 @@ export interface IIsland {
     id: string;
 }
 
+export interface IGeks {
+    coordinates: IGeksCoordinates;
+    identifier: number; // geks type
+    token: number;
+}
+
+export interface IGeksCoordinates {
+    n:  number;
+    ne: number;
+    nw: number;
+    s:  number;
+    se: number;
+    sw: number;
+}
+
 export const EmptyGuid = "00000000-0000-0000-0000-000000000000";

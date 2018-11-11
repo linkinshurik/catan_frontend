@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Layer, RegularPolygon, Stage } from 'react-konva'
 
 import App from 'src/App'
-import { IIsland, IUser } from 'src/types'
+import { IGeks, IUser } from 'src/types'
 
 import brick from '../../assets/map/brick.png'
 import desert from '../../assets/map/desert.png'
@@ -13,24 +13,24 @@ import sheep from '../../assets/map/sheep.png'
 import wheat from '../../assets/map/wheat.png'
 
 export interface IIslandState {
-    land: IIsland | any;
+    land: IGeks[];
     user: IUser | null;
 }
 
 export default class Island extends React.Component<any, IIslandState> {
     state: {
-        land: any,
+        land: [],
         user: any,
         assetsImgObj: HTMLImageElement[]
     } = {
-        land: null,
+        land: [],
         user: App.getUserFromLS(),
         assetsImgObj: []
     }
 
     public componentDidMount() {
         const { id } = this.props.match.params
-        const assets = [brick, desert, lumber, ore, sheep, wheat,]
+        const assets = [lumber, sheep, wheat, brick, ore, desert]
 
         const assetsPreload = assets.map((item) => {
             return new Promise(res => {
@@ -49,7 +49,9 @@ export default class Island extends React.Component<any, IIslandState> {
     }
 
     public render() {
-        const { innerWidth: width } = window
+        const { land, assetsImgObj } = this.state;
+        const { innerWidth: width } = window;
+        let geksPosition = 0;
 
         const rowList = [
             [1, 1, 1],
@@ -69,11 +71,11 @@ export default class Island extends React.Component<any, IIslandState> {
             getPad(3),
         ]
 
-        function getRandomInt(min: number, max: number) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+        // function getRandomInt(min: number, max: number) {
+        //     return Math.floor(Math.random() * (max - min + 1)) + min;
+        // }
 
-        if (!this.state.assetsImgObj.length) {
+        if (!assetsImgObj.length || !land.length) {
             return null
         }
 
@@ -81,7 +83,7 @@ export default class Island extends React.Component<any, IIslandState> {
             <Stage width={window.innerWidth} height={window.innerHeight}>
                 <Layer>
                     {rowList.map((row: any, iRow: number) => {
-                        const getImg = () => this.state.assetsImgObj[getRandomInt(0, 5)]
+                        const getImg = (geks: IGeks) => this.state.assetsImgObj[geks.identifier];
 
                         return row.map((grid: any, i: number) => (
                             <RegularPolygon
@@ -93,7 +95,7 @@ export default class Island extends React.Component<any, IIslandState> {
                                 fillPatternScaleX={.19}
                                 fillPatternScaleY={.19}
                                 fillPatternOffset={{ x: 460, y: 550 }}
-                                fillPatternImage={getImg()}
+                                fillPatternImage={getImg(land[geksPosition++])}
                             />
                         ))
                     })}
@@ -102,3 +104,4 @@ export default class Island extends React.Component<any, IIslandState> {
         )
     }
 }
+

@@ -13,7 +13,7 @@ export class HomePage extends React.Component<IHomePageProps> {
         }
     }
 
-    public goToGameList() {
+    public goToGameList = () => {
         this.props.history.push('/games')
     }
     
